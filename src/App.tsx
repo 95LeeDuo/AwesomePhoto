@@ -1,11 +1,12 @@
 import "./styles/global.css";
+import Header from "@/components/Header";
+import Layout from "@/components/Layout";
 
 function App() {
   return (
-    <>
-      <h1 className={"text-red-500 bg-amber-50"}>asd</h1>
-      <h1 className={"text-red-500 bg-amber-50"}>asd</h1>
-    </>
+    <Layout>
+      <Header />
+    </Layout>
   );
 }
 
