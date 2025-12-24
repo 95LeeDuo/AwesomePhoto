@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      const repo = "/AwesomePhoto";
+
+      // /AwesomePhoto/frame → /frame
+      const pathname = location.pathname.replace(repo, "");
+
+      // 경로 저장
+      sessionStorage.setItem(
+        "redirect",
+        pathname + location.search + location.hash
+      );
+
+      // 루트로 이동
+      location.replace(repo + "/");
+    </script>
+</head>
+<body></body>
+</html>
