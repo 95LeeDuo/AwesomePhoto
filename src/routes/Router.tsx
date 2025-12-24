@@ -1,23 +1,36 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "@/App";
 import Frame from "@/pages/Frame";
+import NotFound from "@/pages/NotFound";
+import Home from "@/pages/Home";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      errorElement: <NotFound />,
+      children: [
+        {
+          index: true,
+          element: <div><Home /></div>,
+        },
+        {
+          path: "frame",
+          element: <Frame />,
+          errorElement: <NotFound />,
+        },
+        {
+          path: "*",
+          element: <NotFound />,
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <div>홈 페이지</div>,
-      },
-      {
-        path: "frame",
-        element: <Frame />,
-      },
-    ],
-  },
-]);
+    basename: "/AwesomePhoto",
+  }
+);
 
 export default function Router() {
   return <RouterProvider router={router} />;
