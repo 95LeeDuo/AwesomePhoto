@@ -1,21 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "@/App";
 import Frame from "@/pages/Frame";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <div>홈 페이지</div>,
-      },
-      {
-        path: "frame",
-        element: <Frame />,
-      },
-    ],
+    element: <div>홈 페이지</div>,
+  },
+  {
+    path: "/frame",
+    element: <Frame />,
   },
 ]);
 
@@ -83,4 +76,3 @@ export default function Router() {
  * useSearchParams()  - 쿼리스트링 (?page=1)
  *
  */
-

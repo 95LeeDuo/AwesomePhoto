@@ -1,13 +1,13 @@
 import "./styles/global.css";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
-import { Outlet } from "react-router-dom";
+import Router from "@/routes/Router.tsx";
 
 function App() {
   return (
     <Layout>
       <Header />
-      <Outlet />
+      <Router />
     </Layout>
   );
 }
