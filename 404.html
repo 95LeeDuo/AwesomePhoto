@@ -5,19 +5,13 @@
     <title>Redirecting...</title>
     <script>
       const repo = "/AwesomePhoto";
+      const fullPath =
+        location.pathname + location.search + location.hash;
 
-      // /AwesomePhoto/frame → /frame
-      const pathname = location.pathname.replace(repo, "");
-
-      // 경로 저장
-      sessionStorage.setItem(
-        "redirect",
-        pathname + location.search + location.hash
-      );
-
-      // 루트로 이동
+      sessionStorage.setItem("redirect", fullPath);
       location.replace(repo + "/");
     </script>
+
 </head>
 <body></body>
 </html>
