@@ -1,19 +1,37 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Frame from "@/pages/Frame";
 import SelectPhoto from "@/pages/SelectPhoto";
+import NotFound from "@/pages/NotFound";
+import Home from "@/pages/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <div>홈 페이지</div>,
-  },
-  {
-    path: "/frame",
-    element: <Frame />,
-  },
-  {
-    path: "select-photo",
-    element: <SelectPhoto />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: (
+          <div>
+            <Home />
+          </div>
+        ),
+      },
+      {
+        path: "frame",
+        element: <Frame />,
+        errorElement: <NotFound />,
+      },
+      {
+        path: "select-photo",
+        element: <SelectPhoto />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
   },
 ]);
 
@@ -81,4 +99,3 @@ export default function Router() {
  * useSearchParams()  - 쿼리스트링 (?page=1)
  *
  */
-
