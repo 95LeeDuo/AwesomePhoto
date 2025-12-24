@@ -1,0 +1,41 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": ["./tsconfig.app.json"],
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "unused-imports",
+    "react",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    /* 회사 설정 유지 */
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "unused-imports/no-unused-imports": "error",
+
+    /* TS에서 불필요한 규칙 완화 */
+    "@typescript-eslint/no-unused-vars": "off",
+    "no-unused-vars": "off"
+  }
+}
