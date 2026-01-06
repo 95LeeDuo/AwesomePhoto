@@ -162,6 +162,11 @@ const UploadArea = () => {
     return stopCamera;
   }, [isCameraMode]);
 
+  console.log(
+    uploadImages.length,
+    uploadImages.length >= 4 && uploadImages.length <= 10,
+  );
+
   return (
     <Container>
       <div
@@ -265,8 +270,8 @@ const UploadArea = () => {
         </Button>
       )}
       <Button
-        className={`h-16 w-full px-2 text-lg ${uploadImages.length !== 4 ? "cursor-not-allowed" : "cursor-pointer"}`}
-        disabled={uploadImages.length >= 4 && uploadImages.length <= 10}
+        className={`h-16 w-full px-2 text-lg ${uploadImages.length < 4 || uploadImages.length > 10 ? "cursor-not-allowed" : "cursor-pointer"}`}
+        disabled={uploadImages.length < 4 || uploadImages.length > 10}
       >
         선택 완료
       </Button>
