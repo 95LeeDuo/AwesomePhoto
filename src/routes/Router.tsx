@@ -7,31 +7,19 @@ import Home from "@/pages/Home";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>홈 페이지</div>,
-    errorElement: <NotFound />,
-    children: [
-      {
-        index: true,
-        element: (
-          <div>
-            <Home />
-          </div>
-        ),
-      },
-      {
-        path: "frame",
-        element: <Frame />,
-        errorElement: <NotFound />,
-      },
-      {
-        path: "select-photo",
-        element: <SelectPhoto />,
-      },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
-    ],
+    element: <Home />,
+  },
+  {
+    path: "/frame",
+    element: <Frame />,
+  },
+  {
+    path: "/select-photo",
+    element: <SelectPhoto />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

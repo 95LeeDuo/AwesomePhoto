@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import frameReducer from "@/store/slices/frameSlice";
+import userReducer from "@/store/slices/userSlice";
 
 export const store = configureStore({
   reducer: {
     frame: frameReducer,
+    user: userReducer,
   },
 });
 
