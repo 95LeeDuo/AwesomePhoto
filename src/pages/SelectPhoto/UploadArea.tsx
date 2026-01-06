@@ -195,6 +195,15 @@ const UploadArea = () => {
             </div>
           </div>
         )}
+
+        <input
+          hidden
+          multiple
+          ref={fileInputRef}
+          type={"file"}
+          accept={"image/*"}
+          onChange={handleChangeUploadFile}
+        />
       </div>
       {uploadImages.length > 0 && (
         <div className={"grid gap-2 xs:grid-cols-4 grid-cols-2"}>
@@ -255,15 +264,12 @@ const UploadArea = () => {
           {isCameraMode ? "촬영 종료" : "카메라 촬영"}
         </Button>
       )}
-
-      <input
-        hidden
-        multiple
-        ref={fileInputRef}
-        type={"file"}
-        accept={"image/*"}
-        onChange={handleChangeUploadFile}
-      />
+      <Button
+        className={`h-16 w-full px-2 text-lg ${uploadImages.length !== 4 ? "cursor-not-allowed" : "cursor-pointer"}`}
+        disabled={uploadImages.length >= 4 && uploadImages.length <= 10}
+      >
+        선택 완료
+      </Button>
     </Container>
   );
 };
