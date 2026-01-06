@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Frame from "@/pages/Frame";
+import SelectPhoto from "@/pages/SelectPhoto";
 
 const router = createBrowserRouter([
   {
@@ -9,6 +10,10 @@ const router = createBrowserRouter([
   {
     path: "/frame",
     element: <Frame />,
+  },
+  {
+    path: "select-photo",
+    element: <SelectPhoto />,
   },
 ]);
 
@@ -76,3 +81,4 @@ export default function Router() {
  * useSearchParams()  - 쿼리스트링 (?page=1)
  *
  */
+
