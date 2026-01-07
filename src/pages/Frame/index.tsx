@@ -5,6 +5,7 @@ import { setFrame, type FrameType } from "@/store/slices/frameSlice";
 const Frame = () => {
   const dispatch = useAppDispatch();
   const selectedFrame = useAppSelector((state) => state.frame.selectedFrame);
+  console.log(selectedFrame);
 
   const frames: Array<{
     type: NonNullable<FrameType>;
