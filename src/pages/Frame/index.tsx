@@ -1,32 +1,35 @@
 import FrameCard from "@/components/Frame/FrameCard";
-import type { FrameType } from "@/components/Frame/FrameCard";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setFrame, type FrameType } from "@/store/slices/frameSlice";
 
 const Frame = () => {
+  const dispatch = useAppDispatch();
+  const selectedFrame = useAppSelector((state) => state.frame.selectedFrame);
+
   const frames: Array<{
-    type: FrameType;
+    type: NonNullable<FrameType>;
     title: string;
     subtitle: string;
   }> = [
-    {
-      type: "1x4-vertical",
-      title: "1 x 4",
-      subtitle: "세로 4컷",
-    },
-    {
-      type: "2x2-vertical",
-      title: "2 x 2 세로",
-      subtitle: "세로형 4컷",
-    },
-    {
-      type: "2x2-horizontal",
-      title: "2 x 2 가로",
-      subtitle: "가로형 4컷",
-    },
-  ];
+      {
+        type: "1x4-vertical",
+        title: "1 x 4",
+        subtitle: "세로 4컷",
+      },
+      {
+        type: "2x2-vertical",
+        title: "2 x 2 세로",
+        subtitle: "세로형 4컷",
+      },
+      {
+        type: "2x2-horizontal",
+        title: "2 x 2 가로",
+        subtitle: "가로형 4컷",
+      },
+    ];
 
   const handleFrameSelect = (type: FrameType) => {
-    console.log("Selected frame:", type);
-    // TODO: 프레임 선택 로직 구현
+    dispatch(setFrame(type));
   };
 
   return (
