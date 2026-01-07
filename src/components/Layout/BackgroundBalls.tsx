@@ -1,30 +1,30 @@
+const BALLS = Array.from({ length: 100 }, (_, i) => {
+  const size = Math.random() * 100 + 30;
+  const left = Math.random() * 100;
+  const top = Math.random() * 100;
+  const duration = Math.random() * 15 + 10;
+  const delay = Math.random() * -8;
+  const hue = Math.random() * 80 + 220;
+  const moveX = Math.random() * 400 - 200;
+  const moveY = Math.random() * 400 - 200;
+
+  return {
+    id: i,
+    size,
+    left,
+    top,
+    duration,
+    delay,
+    hue,
+    moveX,
+    moveY,
+  };
+});
+
 const BackgroundBalls = () => {
-  const balls = Array.from({ length: 100 }, (_, i) => {
-    const size = Math.random() * 100 + 30;
-    const left = Math.random() * 100;
-    const top = Math.random() * 100;
-    const duration = Math.random() * 15 + 10;
-    const delay = Math.random() * -8;
-    const hue = Math.random() * 80 + 220;
-    const moveX = Math.random() * 400 - 200;
-    const moveY = Math.random() * 400 - 200;
-
-    return {
-      id: i,
-      size,
-      left,
-      top,
-      duration,
-      delay,
-      hue,
-      moveX,
-      moveY,
-    };
-  });
-
   return (
     <section className="absolute inset-0 overflow-hidden pointer-events-none">
-      {balls.map((ball) => (
+      {BALLS.map((ball) => (
         <div
           key={ball.id}
           className="absolute rounded-full blur-lg animate-ball-float"

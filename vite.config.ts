@@ -13,7 +13,6 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
-  base: "/AwesomePhoto/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
