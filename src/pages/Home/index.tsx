@@ -1,7 +1,15 @@
+import { useNavigate } from "react-router-dom";
+import { setNavigate } from "@/lib/navagation.ts";
+import { useEffect } from "react";
+
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setNavigate(navigate);
+  }, [navigate]);
+
+  return <div onClick={() => navigate("/frame")}>Home</div>;
+};
 
 export default Home;

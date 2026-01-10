@@ -3,26 +3,30 @@ import Frame from "@/pages/Frame";
 import SelectPhoto from "@/pages/SelectPhoto";
 import NotFound from "@/pages/NotFound";
 import Home from "@/pages/Home";
+import OAuth from "@/pages/OAuth";
 
-const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/frame",
-      element: <Frame />,
-    },
-    {
-      path: "/select-photo",
-      element: <SelectPhoto />,
-    },
-    {
-      path: "*",
-      element: <NotFound />,
-    },
-  ]);
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/OAuth",
+    element: <OAuth />,
+  },
+  {
+    path: "/frame",
+    element: <Frame />,
+  },
+  {
+    path: "/select-photo",
+    element: <SelectPhoto />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
+]);
 
 export default function Router() {
   return <RouterProvider router={router} />;

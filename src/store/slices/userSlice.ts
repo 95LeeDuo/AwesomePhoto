@@ -1,17 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { IUserInfo } from "@/types";
 
-// 프레임 타입 정의
-export type userType = "1x4" | "h2x2" | "v2x2" | null;
+interface UserState {
+  userInfo: IUserInfo | null;
+}
 
-interface IuserState {}
-
-const initialState: IuserState = {};
+const initialState: UserState = {
+  userInfo: null,
+};
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setUserInfo: (state, action: PayloadAction<IUserInfo>) => {
+      state.userInfo = action.payload;
+    },
+    resetUserInfo: (state) => {
+      state.userInfo = null;
+    },
+  },
 });
 
-export const {} = userSlice.actions;
+export const { setUserInfo, resetUserInfo } = userSlice.actions;
 export default userSlice.reducer;

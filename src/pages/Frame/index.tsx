@@ -12,22 +12,22 @@ const Frame = () => {
     title: string;
     subtitle: string;
   }> = [
-      {
-        type: "1x4-vertical",
-        title: "1 x 4",
-        subtitle: "세로 4컷",
-      },
-      {
-        type: "2x2-vertical",
-        title: "2 x 2 세로",
-        subtitle: "세로형 4컷",
-      },
-      {
-        type: "2x2-horizontal",
-        title: "2 x 2 가로",
-        subtitle: "가로형 4컷",
-      },
-    ];
+    {
+      type: "1x4-vertical",
+      title: "1 x 4",
+      subtitle: "세로 4컷",
+    },
+    {
+      type: "2x2-vertical",
+      title: "2 x 2 세로",
+      subtitle: "세로형 4컷",
+    },
+    {
+      type: "2x2-horizontal",
+      title: "2 x 2 가로",
+      subtitle: "가로형 4컷",
+    },
+  ];
 
   const handleFrameSelect = (type: FrameType) => {
     dispatch(setFrame(type));
