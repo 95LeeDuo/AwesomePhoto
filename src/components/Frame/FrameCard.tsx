@@ -1,20 +1,20 @@
-export type FrameType = "1x4-vertical" | "2x2-vertical" | "2x2-horizontal";
+export type FrameType = "1x4" | "v2x2" | "h2x2";
 
 interface FrameCardProps {
-  type: FrameType;
+  frameType: FrameType;
   title: string;
   subtitle: string;
   onClick?: () => void;
 }
 
-const FrameCard = ({ type, title, subtitle, onClick }: FrameCardProps) => {
+const FrameCard = ({ frameType, title, subtitle, onClick }: FrameCardProps) => {
   const renderFramePreview = () => {
-    switch (type) {
-      case "1x4-vertical":
+    switch (frameType) {
+      case "1x4":
         // 포토부스 1x4: 세로로 긴 직사각형 4개를 위아래로 배치
         return (
           <div className="border border-gray-300 rounded-lg p-3">
-            <div className="flex flex-col gap-1.5 w-[100px] h-[200px]">
+            <div className="flex flex-col gap-1.5 w-[70px] h-[200px]">
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
@@ -24,7 +24,7 @@ const FrameCard = ({ type, title, subtitle, onClick }: FrameCardProps) => {
             </div>
           </div>
         );
-      case "2x2-vertical":
+      case "v2x2":
         // 2x2 세로형: 세로가 긴 직사각형 프레임
         return (
           <div className="border border-gray-300 rounded-lg p-3">
@@ -38,7 +38,7 @@ const FrameCard = ({ type, title, subtitle, onClick }: FrameCardProps) => {
             </div>
           </div>
         );
-      case "2x2-horizontal":
+      case "h2x2":
         // 2x2 가로형: 가로가 긴 직사각형 프레임
         return (
           <div className="border border-gray-300 rounded-lg p-3">
