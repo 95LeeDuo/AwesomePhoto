@@ -4,24 +4,25 @@ import SelectPhoto from "@/pages/SelectPhoto";
 import NotFound from "@/pages/NotFound";
 import Home from "@/pages/Home";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/frame",
-    element: <Frame />,
-  },
-  {
-    path: "/select-photo",
-    element: <SelectPhoto />,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/frame",
+      element: <Frame />,
+    },
+    {
+      path: "/select-photo",
+      element: <SelectPhoto />,
+    },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
+  ]);
 
 export default function Router() {
   return <RouterProvider router={router} />;
