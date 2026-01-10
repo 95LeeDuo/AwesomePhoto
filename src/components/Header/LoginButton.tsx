@@ -2,10 +2,11 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog.tsx";
-import GoogleLoginIcon from "@/components/Button/GoogleLoginIcon.tsx";
-import KakaoLoginIcon from "@/components/Button/KakaoLoginIcon.tsx";
+} from "@/components/ui/dialog";
+import GoogleLoginIcon from "@/components/Button/GoogleLoginIcon";
+import KakaoLoginIcon from "@/components/Button/KakaoLoginIcon";
 import type { MouseEvent } from "react";
 import { signIn } from "@/lib/supabase.ts";
 import type { Provider } from "@supabase/supabase-js";
@@ -32,7 +33,9 @@ const LoginButton = () => {
         로그인
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader className={"font-bold text-xl"}>로그인 옵션</DialogHeader>
+        <DialogHeader className={"font-bold text-xl"}>
+          <DialogTitle>로그인 옵션</DialogTitle>
+        </DialogHeader>
         <div className={"flex flex-col gap-4 items-center"}>
           <h2 className={"text-base"}>
             로그인하면 촬영한 사진을 저장하고 다시 볼 수 있어요

@@ -1,5 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
-import { type SignInWithOAuthCredentials } from "@supabase/auth-js/src/lib/types.ts";
+import {
+  createClient,
+  type SignInWithOAuthCredentials,
+} from "@supabase/supabase-js";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
