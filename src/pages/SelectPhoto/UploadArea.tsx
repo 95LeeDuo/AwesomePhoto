@@ -261,16 +261,14 @@ const UploadArea = () => {
           onClick={() => setIsCameraMode(true)}
           size="lg"
           variant="outline"
-          className={`w-full h-16 px-2 text-lg font-semibold border-2 
-            ${isCameraMode ? "border-[#e3e4e8] hover:bg-[#a049d4] hover:text-white hover:border-[#a049d4] bg-transparent" : "text-[#fcfcfc] bg-[#4159d4] hover:bg-[#4159d4]/60"}
-          cursor-pointer`}
+          className={`w-full h-16 px-2 text-lg font-semibold border-2 text-[#fcfcfc] bg-[#4159d4] hover:bg-[#4159d4]/60 cursor-pointer`}
         >
           <Camera className="w-6 h-6 mr-2" />
           {isCameraMode ? "촬영 종료" : "카메라 촬영"}
         </Button>
       )}
       <Button
-        className={`h-16 w-full px-2 text-lg ${uploadImages.length < 4 || uploadImages.length > 10 ? "cursor-not-allowed" : "cursor-pointer"}`}
+        className={`h-16 w-full px-2 text-lg ${uploadImages.length < 4 || uploadImages.length > 10 ? "cursor-not-allowed" : "cursor-pointer"} hover:bg-black/50`}
         disabled={uploadImages.length < 4 || uploadImages.length > 10}
       >
         선택 완료
