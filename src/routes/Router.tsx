@@ -3,35 +3,28 @@ import Frame from "@/pages/Frame";
 import SelectPhoto from "@/pages/SelectPhoto";
 import NotFound from "@/pages/NotFound";
 import Home from "@/pages/Home";
+import OAuth from "@/pages/OAuth";
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>홈 페이지</div>,
-    errorElement: <NotFound />,
-    children: [
-      {
-        index: true,
-        element: (
-          <div>
-            <Home />
-          </div>
-        ),
-      },
-      {
-        path: "frame",
-        element: <Frame />,
-        errorElement: <NotFound />,
-      },
-      {
-        path: "select-photo",
-        element: <SelectPhoto />,
-      },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
-    ],
+    element: <Home />,
+  },
+  {
+    path: "/OAuth",
+    element: <OAuth />,
+  },
+  {
+    path: "/frame",
+    element: <Frame />,
+  },
+  {
+    path: "/select-photo",
+    element: <SelectPhoto />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 // 프레임 타입 정의
-export type FrameType = "1x4" | "h2x2" | "v2x2" | null;
+export type FrameType = "1x4" | "v2x2" | "h2x2" | null;
 
 interface FrameState {
   selectedFrame: FrameType;
@@ -26,4 +26,3 @@ const frameSlice = createSlice({
 
 export const { setFrame, clearFrame } = frameSlice.actions;
 export default frameSlice.reducer;
-
