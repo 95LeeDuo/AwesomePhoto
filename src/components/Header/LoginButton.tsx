@@ -40,7 +40,7 @@ const LoginButton = () => {
           <h2 className={"text-base"}>
             로그인하면 촬영한 사진을 저장하고 다시 볼 수 있어요
           </h2>
-          <div className={"flex flex-col gap-2"}>
+          <div className={"flex flex-col gap-2 max-w-[320px] w-full"}>
             <GoogleLoginIcon
               className={"cursor-pointer"}
               data-id={"google"}
