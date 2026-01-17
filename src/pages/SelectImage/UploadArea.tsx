@@ -1,24 +1,26 @@
 import {
   type ChangeEvent,
   type PropsWithChildren,
-  type MouseEvent,
   type DragEvent,
   useRef,
   useState,
   useEffect,
+  type Dispatch,
+  type SetStateAction,
 } from "react";
 import { Camera, ImageIcon, SwitchCamera, X } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
-
-interface IUploadImages extends File {
-  id: string;
-  previewURL: string;
-}
+import { useAppDispatch, useAppSelector } from "@/store/hooks.ts";
+import { setUploadImages } from "@/store/slices/uploadImagesSlice.ts";
+import UploadImageList from "@/pages/SelectImage/UploadImageList.tsx";
 
 type TFacingMode = "user" | "environment";
 
 const UploadArea = () => {
-  const [uploadImages, setUploadImages] = useState<IUploadImages[]>([]);
+  const dispatch = useAppDispatch();
+  const uploadImages = useAppSelector(
+    (state) => state.uploadImages.uploadImages,
+  );
   const [isFileOver, setIsFileOver] = useState(false);
   const [isCameraMode, setIsCameraMode] = useState(false);
   const [facingMode, setFacingMode] = useState<TFacingMode>("environment");
@@ -32,6 +34,12 @@ const UploadArea = () => {
 
     if (!files || files.length === 0) return;
 
+    if (uploadImages.length + files.length > 10) {
+      alert("10장 이상 업로드할 수 없습니다.");
+      setIsFileOver(false);
+      return;
+    }
+
     const validFiles = Array.from(files).filter((file) =>
       file.type.startsWith("image/"),
     );
@@ -49,7 +57,7 @@ const UploadArea = () => {
       (img) => !existingIds.has(img.id),
     );
 
-    setUploadImages((prev) => [...prev, ...filteredFiles]);
+    dispatch(setUploadImages([...uploadImages, ...filteredFiles]));
 
     setIsFileOver(false);
   };
@@ -58,6 +66,11 @@ const UploadArea = () => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
+    if (uploadImages.length + files.length > 10) {
+      alert("10장 이상 업로드할 수 없습니다.");
+      return;
+    }
+
     const validFiles = Array.from(files).filter((file) =>
       file.type.startsWith("image/"),
     );
@@ -75,12 +88,7 @@ const UploadArea = () => {
       (img) => !existingIds.has(img.id),
     );
 
-    setUploadImages((prev) => [...prev, ...filteredFiles]);
-  };
-
-  const handleChangeRemoveFile = (e: MouseEvent<HTMLDivElement>) => {
-    const id = e.currentTarget.dataset.id;
-    setUploadImages((prev) => [...prev.filter((image) => image.id !== id)]);
+    dispatch(setUploadImages([...uploadImages, ...filteredFiles]));
   };
 
   const handleClickCaptureCamera = async () => {
@@ -112,7 +120,7 @@ const UploadArea = () => {
       previewURL: URL.createObjectURL(file),
     };
 
-    setUploadImages((prev) => [...prev, addPropertyFile]);
+    dispatch(setUploadImages([...uploadImages, addPropertyFile]));
   };
 
   const handleChangeFacingMode = async () => {
@@ -162,13 +170,9 @@ const UploadArea = () => {
     return stopCamera;
   }, [isCameraMode]);
 
-  console.log(
-    uploadImages.length,
-    uploadImages.length >= 4 && uploadImages.length <= 10,
-  );
-
   return (
     <Container>
+      {/* D&D 영역 */}
       <div
         className={`aspect-video border-2 border-[#e3e4e8] shadow-xl rounded-md ${isFileOver ? "bg-black/20" : "bg-[#f0f1fa]"}`}
       >
@@ -178,8 +182,7 @@ const UploadArea = () => {
             playsInline
             autoPlay
             muted
-            className={"h-full w-full rounded"}
-            // className="object-contain"
+            className={"h-full w-full rounded object-cover"}
           />
         ) : (
           <div
@@ -210,52 +213,17 @@ const UploadArea = () => {
           onChange={handleChangeUploadFile}
         />
       </div>
-      {uploadImages.length > 0 && (
-        <div className={"grid gap-2 xs:grid-cols-4 grid-cols-2"}>
-          {uploadImages.map((uploadImage) => (
-            <div
-              key={uploadImage.id}
-              className={
-                "bg-gray-500/30 rounded flex items-center relative aspect-square"
-              }
-            >
-              <img src={uploadImage.previewURL} alt={uploadImage.name} />
-              <div
-                data-id={uploadImage.id}
-                className={
-                  "absolute -top-1 -right-1 bg-gray-400 rounded-full p-1 cursor-pointer"
-                }
-                onClick={handleChangeRemoveFile}
-              >
-                <X className={"w-[12px] h-[12px] text-white"} />
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
 
+      {/* 사진 리스트 영역 */}
+      <UploadImageList />
+
+      {/* 버튼 영역 */}
       {isCameraMode ? (
-        <div className={"w-full flex justify-between items-center"}>
-          <Button
-            className={"w-12 h-12 rounded-full cursor-pointer"}
-            onClick={() => setIsCameraMode(false)}
-          >
-            <X className={"!w-6 !h-6"} />
-          </Button>
-          <Button
-            onClick={handleClickCaptureCamera}
-            size={"default"}
-            className={"w-16 h-16 rounded-full bg-[#a049d4] cursor-pointer"}
-          >
-            <Camera className={"!w-6 !h-6"} />
-          </Button>
-          <Button
-            className={"w-12 h-12 rounded-full cursor-pointer"}
-            onClick={handleChangeFacingMode}
-          >
-            <SwitchCamera className={"!w-6 !h-6"} />
-          </Button>
-        </div>
+        <CameraButton
+          setIsCameraMode={setIsCameraMode}
+          handleClickCaptureCamera={handleClickCaptureCamera}
+          handleChangeFacingMode={handleChangeFacingMode}
+        />
       ) : (
         <Button
           onClick={() => setIsCameraMode(true)}
@@ -264,7 +232,7 @@ const UploadArea = () => {
           className={`w-full h-16 px-2 text-lg font-semibold border-2 text-[#fcfcfc] bg-[#4159d4] hover:bg-[#4159d4]/60 cursor-pointer`}
         >
           <Camera className="w-6 h-6 mr-2" />
-          {isCameraMode ? "촬영 종료" : "카메라 촬영"}
+          카메라 촬영
         </Button>
       )}
       <Button
@@ -287,6 +255,38 @@ const Container = ({ children }: PropsWithChildren) => {
       }
     >
       {children}
+    </div>
+  );
+};
+
+interface CameraButtonProps {
+  setIsCameraMode: Dispatch<SetStateAction<boolean>>;
+  handleClickCaptureCamera: () => Promise<void>;
+  handleChangeFacingMode: () => void;
+}
+
+const CameraButton = (props: CameraButtonProps) => {
+  return (
+    <div className={"w-full flex justify-between items-center"}>
+      <Button
+        className={"w-12 h-12 rounded-full cursor-pointer"}
+        onClick={() => props.setIsCameraMode(false)}
+      >
+        <X className={"!w-6 !h-6"} />
+      </Button>
+      <Button
+        onClick={props.handleClickCaptureCamera}
+        size={"default"}
+        className={"w-16 h-16 rounded-full bg-[#a049d4] cursor-pointer"}
+      >
+        <Camera className={"!w-6 !h-6"} />
+      </Button>
+      <Button
+        className={"w-12 h-12 rounded-full cursor-pointer"}
+        onClick={props.handleChangeFacingMode}
+      >
+        <SwitchCamera className={"!w-6 !h-6"} />
+      </Button>
     </div>
   );
 };

@@ -34,6 +34,8 @@ export default App;
 
 const ContentWrapper = ({ children }: PropsWithChildren) => {
   return (
-    <section className={"flex justify-center p-4 z-10"}>{children}</section>
+    <section className={"flex justify-center p-4 z-10 flex-1"}>
+      {children}
+    </section>
   );
 };

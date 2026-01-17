@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Frame from "@/pages/Frame";
-import SelectPhoto from "@/pages/SelectPhoto";
+import SelectImage from "@/pages/SelectImage";
 import NotFound from "@/pages/NotFound";
 import Home from "@/pages/Home";
 import OAuth from "@/pages/OAuth";
@@ -19,8 +19,8 @@ export const router = createBrowserRouter([
     element: <Frame />,
   },
   {
-    path: "/select-photo",
-    element: <SelectPhoto />,
+    path: "/selectImage",
+    element: <SelectImage />,
   },
   {
     path: "*",
