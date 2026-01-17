@@ -53,7 +53,7 @@ const Frame = () => {
     if (frameType) {
       console.log("Selected frame:", frameType);
       dispatch(setFrame(frameType));
-      navigate("/select-photo");
+      navigate("/selectPhoto");
     }
   };
 
