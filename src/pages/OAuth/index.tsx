@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/store/hooks.ts";
 import { setUserInfo } from "@/store/slices/userSlice.ts";
 import type { IUserInfo } from "@/types";
+import Spinner from "@/components/Spinner";
 
 const OAuth = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ const OAuth = () => {
     getUser();
   }, []);
 
-  return null;
+  return <Spinner />;
 };
 
 export default OAuth;
