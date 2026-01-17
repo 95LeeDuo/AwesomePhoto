@@ -21,3 +21,8 @@ export interface IUserInfo {
     sub: string;
   };
 }
+
+export interface IUploadImages extends File {
+  id: string;
+  previewURL: string;
+}
