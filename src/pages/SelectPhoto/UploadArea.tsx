@@ -9,6 +9,9 @@ import {
 } from "react";
 import { Camera, ImageIcon, SwitchCamera, X } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
+import { useAppDispatch } from "@/store/hooks";
+import { setPhotos, type PhotoImage } from "@/store/slices/photoSlice";
+import { useNavigate } from "react-router-dom";
 
 interface IUploadImages extends File {
   id: string;
@@ -18,6 +21,8 @@ interface IUploadImages extends File {
 type TFacingMode = "user" | "environment";
 
 const UploadArea = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [uploadImages, setUploadImages] = useState<IUploadImages[]>([]);
   const [isFileOver, setIsFileOver] = useState(false);
   const [isCameraMode, setIsCameraMode] = useState(false);
@@ -270,6 +275,17 @@ const UploadArea = () => {
       <Button
         className={`h-16 w-full px-2 text-lg ${uploadImages.length < 4 || uploadImages.length > 10 ? "cursor-not-allowed" : "cursor-pointer"} hover:bg-black/50`}
         disabled={uploadImages.length < 4 || uploadImages.length > 10}
+        onClick={() => {
+          if (uploadImages.length >= 4 && uploadImages.length <= 10) {
+            const photos: PhotoImage[] = uploadImages.map((img) => ({
+              id: img.id,
+              previewURL: img.previewURL,
+              name: img.name,
+            }));
+            dispatch(setPhotos(photos));
+            navigate("/select-location");
+          }
+        }}
       >
         선택 완료
       </Button>

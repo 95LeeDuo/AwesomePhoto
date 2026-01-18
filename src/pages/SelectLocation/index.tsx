@@ -5,8 +5,8 @@ import SelectedFrame from "./SelectedFrame";
 const SelectLocation = () => {
   return (
     <Container>
-      <SelectedPhoto />
       <SelectedFrame />
+      <SelectedPhoto />
     </Container>
   );
 };
@@ -15,7 +15,7 @@ export default SelectLocation;
 
 const Container = ({ children }: PropsWithChildren) => {
   return (
-    <div className="max-w-[1000px] w-full mx-2 flex flex-col gap-6 items-center">
+    <div className="max-w-[1200px] w-full mx-2 flex flex-row gap-6 items-start justify-center">
       {children}
     </div>
   );
