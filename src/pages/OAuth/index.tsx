@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { getUserInfo } from "@/lib/supabase.ts";
+import { getUserInfo } from "@/lib/supabase";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "@/store/hooks.ts";
-import { setUserInfo } from "@/store/slices/userSlice.ts";
+import { useAppDispatch } from "@/store/hooks";
+import { setUserInfo } from "@/store/slices/userSlice";
 import type { IUserInfo } from "@/types";
 import Spinner from "@/components/Spinner";
 

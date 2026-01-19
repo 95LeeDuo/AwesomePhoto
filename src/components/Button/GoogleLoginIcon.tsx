@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "react";
-import { cn } from "@/lib/utils.ts";
+import { cn } from "@/lib/utils";
 
 const GoogleLoginIcon = (props: HTMLAttributes<HTMLButtonElement>) => {
   const { className, ...rest } = props;

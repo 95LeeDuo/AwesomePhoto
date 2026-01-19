@@ -8,7 +8,7 @@ import {
 import GoogleLoginIcon from "@/components/Button/GoogleLoginIcon";
 import KakaoLoginIcon from "@/components/Button/KakaoLoginIcon";
 import type { MouseEvent } from "react";
-import { signIn } from "@/lib/supabase.ts";
+import { signIn } from "@/lib/supabase";
 import type { Provider } from "@supabase/supabase-js";
 
 const LoginButton = () => {

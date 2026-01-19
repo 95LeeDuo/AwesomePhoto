@@ -1,11 +1,11 @@
 import "./styles/global.css";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
-import Router from "@/routes/Router.tsx";
+import Router from "@/routes/Router";
 import { type PropsWithChildren, useEffect } from "react";
-import { useAppDispatch } from "@/store/hooks.ts";
-import { supabase } from "@/lib/supabase.ts";
-import { resetUserInfo } from "@/store/slices/userSlice.ts";
+import { useAppDispatch } from "@/store/hooks";
+import { supabase } from "@/lib/supabase";
+import { resetUserInfo } from "@/store/slices/userSlice";
 
 function App() {
   const dispatch = useAppDispatch();

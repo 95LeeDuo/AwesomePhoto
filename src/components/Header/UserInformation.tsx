@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signOut } from "@/lib/supabase.ts";
+import { signOut } from "@/lib/supabase";
 
 interface IUserInformationProps {
   userInfo: IUserInfo;

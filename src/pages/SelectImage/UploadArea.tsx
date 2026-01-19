@@ -9,10 +9,10 @@ import {
   type SetStateAction,
 } from "react";
 import { Camera, ImageIcon, SwitchCamera, X } from "lucide-react";
-import { Button } from "@/components/ui/button.tsx";
-import { useAppDispatch, useAppSelector } from "@/store/hooks.ts";
-import { setUploadImages } from "@/store/slices/uploadImagesSlice.ts";
-import UploadImageList from "@/pages/SelectImage/UploadImageList.tsx";
+import { Button } from "@/components/ui/button";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setUploadImages } from "@/store/slices/imageSlice";
+import UploadImageList from "@/pages/SelectImage/UploadImageList";
 
 type TFacingMode = "user" | "environment";
 

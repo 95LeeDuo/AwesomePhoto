@@ -1,8 +1,7 @@
 import { ImageIcon } from "lucide-react";
-import { useAppSelector } from "@/store/hooks.ts";
+import { useAppSelector } from "@/store/hooks";
 import UserInformation from "@/components/Header/UserInformation";
-
-import LoginButton from "@/components/Header/LoginButton.tsx";
+import LoginButton from "@/components/Header/LoginButton";
 
 const Header = () => {
   const userInfo = useAppSelector((state) => state.user.userInfo);
