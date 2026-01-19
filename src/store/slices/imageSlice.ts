@@ -9,7 +9,7 @@ const initialState: uploadImagesState = {
   uploadImages: [],
 };
 
-const uploadImagesSlice = createSlice({
+const imageSlice = createSlice({
   name: "uploadImages",
   initialState,
   reducers: {
@@ -22,5 +22,5 @@ const uploadImagesSlice = createSlice({
   },
 });
 
-export const { setUploadImages, resetUploadImages } = uploadImagesSlice.actions;
-export default uploadImagesSlice.reducer;
+export const { setUploadImages, resetUploadImages } = imageSlice.actions;
+export default imageSlice.reducer;

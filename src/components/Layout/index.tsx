@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import BackgroundBalls from "@/components/Layout/BackgroundBalls.tsx";
+import BackgroundBalls from "@/components/Layout/BackgroundBalls";
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (

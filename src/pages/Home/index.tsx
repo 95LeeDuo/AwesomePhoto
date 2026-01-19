@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { setNavigate } from "@/lib/navagation.ts";
+import { setNavigate } from "@/lib/navagation";
 import { useEffect } from "react";
 
 const Home = () => {

@@ -1,4 +1,4 @@
-import UploadArea from "@/pages/SelectImage/UploadArea.tsx";
+import UploadArea from "@/pages/SelectImage/UploadArea";
 import type { PropsWithChildren } from "react";
 
 const SelectImage = () => {

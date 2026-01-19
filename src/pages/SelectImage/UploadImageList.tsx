@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks.ts";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import type { MouseEvent } from "react";
-import { setUploadImages } from "@/store/slices/uploadImagesSlice.ts";
+import { setUploadImages } from "@/store/slices/imageSlice";
 
 const UploadImageList = () => {
   const dispatch = useAppDispatch();
