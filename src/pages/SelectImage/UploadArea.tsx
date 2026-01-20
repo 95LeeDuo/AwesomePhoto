@@ -9,15 +9,18 @@ import {
   type SetStateAction,
 } from "react";
 import { Camera, ImageIcon, SwitchCamera, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.tsx";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setUploadImages } from "@/store/slices/imageSlice";
+import type { IUploadImages } from "@/types";
+import { useNavigate } from "react-router-dom";
 import UploadImageList from "@/pages/SelectImage/UploadImageList";
 
 type TFacingMode = "user" | "environment";
 
 const UploadArea = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const uploadImages = useAppSelector(
     (state) => state.uploadImages.uploadImages,
   );
@@ -44,7 +47,7 @@ const UploadArea = () => {
       file.type.startsWith("image/"),
     );
 
-    const addPropertyFiles = validFiles.map((file) => {
+    const addPropertyFiles: IUploadImages[] = validFiles.map((file) => {
       return {
         ...file,
         id: `${file.name}_${file.lastModified}`,
@@ -238,6 +241,11 @@ const UploadArea = () => {
       <Button
         className={`h-16 w-full px-2 text-lg ${uploadImages.length < 4 || uploadImages.length > 10 ? "cursor-not-allowed" : "cursor-pointer"} hover:bg-black/50`}
         disabled={uploadImages.length < 4 || uploadImages.length > 10}
+        onClick={() => {
+          if (uploadImages.length >= 4 && uploadImages.length <= 10) {
+            navigate("/select-location");
+          }
+        }}
       >
         선택 완료
       </Button>
