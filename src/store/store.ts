@@ -4,11 +4,13 @@ import storage from "redux-persist/lib/storage";
 import frameReducer from "@/store/slices/frameSlice";
 import userReducer from "@/store/slices/userSlice";
 import photoReducer from "@/store/slices/photoSlice";
+import uploadImagesSlice from "@/store/slices/imageSlice.ts";
 
 const rootReducer = combineReducers({
   frame: frameReducer,
   user: userReducer,
   photo: photoReducer,
+  uploadImages: uploadImagesSlice,
 });
 
 const persistConfig = {
