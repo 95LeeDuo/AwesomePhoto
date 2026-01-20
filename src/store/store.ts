@@ -3,20 +3,18 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import frameReducer from "@/store/slices/frameSlice";
 import userReducer from "@/store/slices/userSlice";
-import photoReducer from "@/store/slices/photoSlice";
-import uploadImagesSlice from "@/store/slices/imageSlice.ts";
+import uploadImagesSlice from "@/store/slices/imageSlice";
 
 const rootReducer = combineReducers({
   frame: frameReducer,
   user: userReducer,
-  photo: photoReducer,
   uploadImages: uploadImagesSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["frame", "user", "photo"],
+  whitelist: ["frame", "user", "uploadImages"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

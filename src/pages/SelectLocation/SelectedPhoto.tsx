@@ -1,13 +1,14 @@
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { addPhotoToSlot } from "@/store/slices/photoSlice";
-import type { PhotoImage } from "@/store/slices/photoSlice";
+import { addPhotoToSlot } from "@/store/slices/imageSlice";
+import type { IUploadImages } from "@/types";
+
 
 const SelectedPhoto = () => {
   const dispatch = useAppDispatch();
-  const selectedPhotos = useAppSelector((state) => state.photo.selectedPhotos);
-  const frameSlots = useAppSelector((state) => state.photo.frameSlots);
+  const selectedPhotos = useAppSelector((state) => state.uploadImages.uploadImages);
+  const frameSlots = useAppSelector((state) => state.uploadImages.frameSlots);
 
-  const handlePhotoClick = (photo: PhotoImage) => {
+  const handlePhotoClick = (photo: IUploadImages) => {
     // 첫 번째 빈 슬롯 찾기
     const emptySlotIndex = frameSlots.findIndex((slot) => slot === null);
     if (emptySlotIndex !== -1) {

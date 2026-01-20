@@ -11,11 +11,10 @@ import {
 import { Camera, ImageIcon, SwitchCamera, X } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setPhotos, type PhotoImage } from "@/store/slices/photoSlice";
+import { setUploadImages } from "@/store/slices/imageSlice";
+import type { IUploadImages } from "@/types";
 import { useNavigate } from "react-router-dom";
 import UploadImageList from "@/pages/SelectImage/UploadImageList";
-import { setUploadImages } from "@/store/slices/imageSlice";
-
 
 type TFacingMode = "user" | "environment";
 
@@ -48,7 +47,7 @@ const UploadArea = () => {
       file.type.startsWith("image/"),
     );
 
-    const addPropertyFiles = validFiles.map((file) => {
+    const addPropertyFiles: IUploadImages[] = validFiles.map((file) => {
       return {
         ...file,
         id: `${file.name}_${file.lastModified}`,
@@ -244,12 +243,6 @@ const UploadArea = () => {
         disabled={uploadImages.length < 4 || uploadImages.length > 10}
         onClick={() => {
           if (uploadImages.length >= 4 && uploadImages.length <= 10) {
-            const photos: PhotoImage[] = uploadImages.map((img) => ({
-              id: img.id,
-              previewURL: img.previewURL,
-              name: img.name,
-            }));
-            dispatch(setPhotos(photos));
             navigate("/select-location");
           }
         }}

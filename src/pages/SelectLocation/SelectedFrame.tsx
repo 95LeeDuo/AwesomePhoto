@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { addPhotoToSlot, removePhotoFromSlot } from "@/store/slices/photoSlice";
+import { addPhotoToSlot, removePhotoFromSlot } from "@/store/slices/imageSlice";
 import type { FrameType } from "@/store/slices/frameSlice";
 
 // 프레임 타입별 슬롯 위치 설정
@@ -102,8 +102,8 @@ const SLOT_POSITIONS: Record<
 const SelectedFrame = () => {
   const dispatch = useAppDispatch();
   const selectedFrame = useAppSelector((state) => state.frame.selectedFrame); // 선택된 프레임 타입
-  const selectedPhotos = useAppSelector((state) => state.photo.selectedPhotos); // 선택된 사진 목록
-  const frameSlots = useAppSelector((state) => state.photo.frameSlots); // 프레임 슬롯에 배치된 사진들
+  const selectedPhotos = useAppSelector((state) => state.uploadImages.uploadImages); // 선택된 사진 목록
+  const frameSlots = useAppSelector((state) => state.uploadImages.frameSlots); // 프레임 슬롯에 배치된 사진들
 
   // 드래그 앤 드롭: 사진을 슬롯에 배치
   const handleDrop = (
