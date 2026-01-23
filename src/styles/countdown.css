@@ -1,0 +1,28 @@
+@keyframes count {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+}
+
+@keyframes shoot {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.animate-count {
+    animation: count 1s ease-out forwards;
+}
+
+.animate-shoot {
+    animation: shoot 1s ease-out forwards;
+}
+

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./googleLogin.css";
+@import "./countdown.css";
 
 :root {
     /* Updated color scheme for photo booth with indigo primary and purple accent */
@@ -158,3 +159,4 @@ body {
     @apply bg-background text-foreground;
     }
 }
+
