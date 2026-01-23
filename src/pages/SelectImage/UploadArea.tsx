@@ -5,8 +5,6 @@ import {
   useRef,
   useState,
   useEffect,
-  type Dispatch,
-  type SetStateAction,
 } from "react";
 import { Camera, ImageIcon, SwitchCamera, X } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
@@ -15,8 +13,11 @@ import { setUploadImages } from "@/store/slices/imageSlice";
 import type { IUploadImages } from "@/types";
 import { useNavigate } from "react-router-dom";
 import UploadImageList from "@/pages/SelectImage/UploadImageList";
+import Countdown from "@/pages/SelectImage/Countdown";
 
 type TFacingMode = "user" | "environment";
+
+export const DEFAULT_SHTTUER_DELAY = 4;
 
 const UploadArea = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ const UploadArea = () => {
   const [isFileOver, setIsFileOver] = useState(false);
   const [isCameraMode, setIsCameraMode] = useState(false);
   const [facingMode, setFacingMode] = useState<TFacingMode>("environment");
+  const [isCountdown, setIsCountdown] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -102,28 +104,37 @@ const UploadArea = () => {
       console.debug("카메라가 아직 준비 안됨");
       return;
     }
+    setIsCountdown(true);
 
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    setTimeout(async () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
 
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    const dataURL = canvas.toDataURL("image/jpeg");
+      const dataURL = canvas.toDataURL("image/jpeg");
 
-    const blob = await fetch(dataURL).then((res) => res.blob());
-    const file = new File([blob], "capture.jpg", { type: "image/jpeg" });
+      const blob = await fetch(dataURL).then((res) => res.blob());
+      const file = new File([blob], "capture.jpg", { type: "image/jpeg" });
 
-    const addPropertyFile = {
-      ...file,
-      id: `${file.name}_${file.lastModified}`,
-      previewURL: URL.createObjectURL(file),
-    };
+      const addPropertyFile = {
+        ...file,
+        id: `${file.name}_${file.lastModified}`,
+        previewURL: URL.createObjectURL(file),
+      };
 
-    dispatch(setUploadImages([...uploadImages, addPropertyFile]));
+      setIsCountdown(false);
+      dispatch(setUploadImages([...uploadImages, addPropertyFile]));
+    }, DEFAULT_SHTTUER_DELAY * 1000);
+  };
+
+  const handleCancelCamera = () => {
+    setIsCameraMode(false);
+    setIsCountdown(false);
   };
 
   const handleChangeFacingMode = async () => {
@@ -180,13 +191,16 @@ const UploadArea = () => {
         className={`aspect-video border-2 border-[#e3e4e8] shadow-xl rounded-md ${isFileOver ? "bg-black/20" : "bg-[#f0f1fa]"}`}
       >
         {isCameraMode ? (
-          <video
-            ref={videoRef}
-            playsInline
-            autoPlay
-            muted
-            className={"h-full w-full rounded object-cover"}
-          />
+          <div className={"w-full h-full relative"}>
+            <video
+              ref={videoRef}
+              playsInline
+              autoPlay
+              muted
+              className={"h-full w-full rounded object-cover"}
+            />
+            {isCountdown && <Countdown />}
+          </div>
         ) : (
           <div
             className={"cursor-pointer h-full"}
@@ -218,14 +232,15 @@ const UploadArea = () => {
       </div>
 
       {/* 사진 리스트 영역 */}
-      <UploadImageList />
+      <UploadImageList disabled={isCountdown} />
 
       {/* 버튼 영역 */}
       {isCameraMode ? (
         <CameraButton
-          setIsCameraMode={setIsCameraMode}
+          handleCancelCamera={handleCancelCamera}
           handleClickCaptureCamera={handleClickCaptureCamera}
           handleChangeFacingMode={handleChangeFacingMode}
+          disabled={isCountdown}
         />
       ) : (
         <Button
@@ -268,17 +283,19 @@ const Container = ({ children }: PropsWithChildren) => {
 };
 
 interface CameraButtonProps {
-  setIsCameraMode: Dispatch<SetStateAction<boolean>>;
+  handleCancelCamera: () => void;
   handleClickCaptureCamera: () => Promise<void>;
   handleChangeFacingMode: () => void;
+  disabled: boolean;
 }
 
 const CameraButton = (props: CameraButtonProps) => {
   return (
     <div className={"w-full flex justify-between items-center"}>
       <Button
-        className={"w-12 h-12 rounded-full cursor-pointer"}
-        onClick={() => props.setIsCameraMode(false)}
+        className={`w-12 h-12 rounded-full cursor-pointer`}
+        onClick={props.handleCancelCamera}
+        disabled={props.disabled}
       >
         <X className={"!w-6 !h-6"} />
       </Button>
@@ -286,12 +303,14 @@ const CameraButton = (props: CameraButtonProps) => {
         onClick={props.handleClickCaptureCamera}
         size={"default"}
         className={"w-16 h-16 rounded-full bg-[#a049d4] cursor-pointer"}
+        disabled={props.disabled}
       >
         <Camera className={"!w-6 !h-6"} />
       </Button>
       <Button
         className={"w-12 h-12 rounded-full cursor-pointer"}
         onClick={props.handleChangeFacingMode}
+        disabled={props.disabled}
       >
         <SwitchCamera className={"!w-6 !h-6"} />
       </Button>
