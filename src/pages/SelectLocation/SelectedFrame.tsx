@@ -1,41 +1,19 @@
+import { useCallback } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addPhotoToSlot, removePhotoFromSlot } from "@/store/slices/imageSlice";
 import type { FrameType } from "@/store/slices/frameSlice";
+import { SLOT_1X4_WIDTH_PCT, SLOT_1X4_HEIGHT_PCT } from "./slotPositions";
 
-// 프레임 타입별 슬롯 위치 설정
+// 프레임 타입별 슬롯 위치 설정 (1x4는 500x385 비율)
 const SLOT_POSITIONS: Record<
   Exclude<FrameType, null>,
   React.CSSProperties[]
 > = {
   "1x4": [
-    {
-      top: "1.5%",
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "38%",
-      height: "22%",
-    },
-    {
-      top: "26%",
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "38%",
-      height: "22%",
-    },
-    {
-      top: "50%",
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "38%",
-      height: "22%",
-    },
-    {
-      top: "74%",
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "38%",
-      height: "22%",
-    },
+    { top: "1.5%", left: "50%", transform: "translateX(-50%)", width: `${SLOT_1X4_WIDTH_PCT}%`, height: `${SLOT_1X4_HEIGHT_PCT}%` },
+    { top: "25.5%", left: "50%", transform: "translateX(-50%)", width: `${SLOT_1X4_WIDTH_PCT}%`, height: `${SLOT_1X4_HEIGHT_PCT}%` },
+    { top: "50%", left: "50%", transform: "translateX(-50%)", width: `${SLOT_1X4_WIDTH_PCT}%`, height: `${SLOT_1X4_HEIGHT_PCT}%` },
+    { top: "74%", left: "50%", transform: "translateX(-50%)", width: `${SLOT_1X4_WIDTH_PCT}%`, height: `${SLOT_1X4_HEIGHT_PCT}%` },
   ],
   v2x2: [
     {
@@ -105,34 +83,27 @@ const SelectedFrame = () => {
   const selectedPhotos = useAppSelector((state) => state.uploadImages.uploadImages); // 선택된 사진 목록
   const frameSlots = useAppSelector((state) => state.uploadImages.frameSlots); // 프레임 슬롯에 배치된 사진들
 
-  // 드래그 앤 드롭: 사진을 슬롯에 배치
-  const handleDrop = (
-    e: React.DragEvent<HTMLDivElement>,
-    slotIndex: number,
-  ) => {
-    e.preventDefault();
-    const photoId = e.dataTransfer.getData("photoId");
-    if (photoId) {
-      const photo = selectedPhotos.find((p) => p.id === photoId);
-      if (photo) {
-        dispatch(addPhotoToSlot({ photo, slotIndex }));
-      }
-    }
-  };
+  const handleDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>, slotIndex: number) => {
+      e.preventDefault();
+      const photoId = e.dataTransfer.getData("photoId");
+      const photo = photoId ? selectedPhotos.find((p) => p.id === photoId) : undefined;
+      if (photo) dispatch(addPhotoToSlot({ photo, slotIndex }));
+    },
+    [dispatch, selectedPhotos]
+  );
 
-  // 드래그 오버: 드롭 가능하도록 설정
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
-  };
+  }, []);
 
-  // 슬롯 클릭: 사진이 있으면 제거
-  const handleClick = (slotIndex: number) => {
-    if (frameSlots[slotIndex]) {
-      // 슬롯에 사진이 있으면 제거
-      dispatch(removePhotoFromSlot(slotIndex));
-    }
-  };
+  const handleClick = useCallback(
+    (slotIndex: number) => {
+      if (frameSlots[slotIndex]) dispatch(removePhotoFromSlot(slotIndex));
+    },
+    [dispatch, frameSlots]
+  );
 
   // 현재 프레임 타입에 맞는 슬롯 위치 가져오기
   const slotPositions = selectedFrame
@@ -150,14 +121,8 @@ const SelectedFrame = () => {
 
   return (
     <div className="flex-1 border-2 border-[#e3e4e8] shadow-xl rounded-md p-8 bg-white">
-      <h2 className="text-xl font-semibold mb-4">프레임</h2>
       <div className="relative w-full aspect-3/4 bg-gray-100 rounded-md overflow-hidden">
-        <img
-          src="/test_frame.png"
-          alt="frame"
-          className="absolute inset-0 w-full h-full object-contain"
-        />
-
+        {/* 슬롯 이미지들(뒤 레이어) */}
         {slotPositions.map((position, index) => (
           <div
             key={index}
@@ -180,6 +145,13 @@ const SelectedFrame = () => {
             )}
           </div>
         ))}
+
+        {/* 프레임(투명 영역 0) → 가장 앞에 배치, 클릭은 아래 슬롯으로 전달 */}
+        <img
+          src="/test_frame.png"
+          alt="frame"
+          className="absolute inset-0 w-full h-full object-contain pointer-events-none z-10"
+        />
       </div>
     </div>
   );
