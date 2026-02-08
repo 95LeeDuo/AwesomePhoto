@@ -1,11 +1,9 @@
-// src/store/slices/imageSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IUploadImages } from "@/types";
 
-
 interface ImageState {
   uploadImages: IUploadImages[];
-  frameSlots: (IUploadImages | null)[];  // photoSlice에서 가져옴
+  frameSlots: (IUploadImages | null)[];
 }
 
 const initialState: ImageState = {
@@ -37,6 +35,9 @@ const imageSlice = createSlice({
         state.frameSlots[slotIndex] = null;
       }
     },
+    clearFrameSlots: (state) => {
+      state.frameSlots = [null, null, null, null];
+    },
   },
 });
 
@@ -44,5 +45,6 @@ export const {
   setUploadImages,
   addPhotoToSlot,
   removePhotoFromSlot,
+  clearFrameSlots,
 } = imageSlice.actions;
 export default imageSlice.reducer;

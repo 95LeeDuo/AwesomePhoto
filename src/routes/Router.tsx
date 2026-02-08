@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Frame from "@/pages/Frame";
 import SelectLocation from "@/pages/SelectLocation";
 import SelectImage from "@/pages/SelectImage";
+import Save from "@/pages/Save";
 import NotFound from "@/pages/NotFound";
 import Home from "@/pages/Home";
 import OAuth from "@/pages/OAuth";
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
   {
     path: "/select-location",
     element: <SelectLocation />,
+  },
+  {
+    path: "/save",
+    element: <Save />,
   },
   {
     path: "*",
